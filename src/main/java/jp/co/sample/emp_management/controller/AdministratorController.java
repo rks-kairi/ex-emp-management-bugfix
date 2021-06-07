@@ -74,7 +74,8 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/insert")
 
-	public String insert(InsertAdministratorForm form, BindingResult result) {
+	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
+
 		if(result.hasErrors()) {
 			return toInsert();
 		}
