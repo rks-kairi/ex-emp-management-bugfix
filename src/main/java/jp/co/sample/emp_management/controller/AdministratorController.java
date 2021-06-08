@@ -75,6 +75,12 @@ public class AdministratorController {
 
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 
+		
+		if(!form.getPassword().equals(form.getConfirmationPassword())) {
+			result.rejectValue("password", "", "パスワードが一致していません");
+			result.rejectValue("confirmationPassword", "","");
+		}
+		
 		Administrator administrator2 = administratorService.findByMailAddress(form.getMailAddress());
 		if(administrator2 != null) {
 			result.rejectValue("mailAddress","","こちらのメールアドレスは既に登録されています");
@@ -83,6 +89,7 @@ public class AdministratorController {
 		if(result.hasErrors()) {
 			return toInsert();
 		}
+		
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
