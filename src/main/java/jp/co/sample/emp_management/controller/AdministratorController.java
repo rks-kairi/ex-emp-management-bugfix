@@ -75,7 +75,11 @@ public class AdministratorController {
 	@RequestMapping("/insert")
 
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
-
+		Administrator administrator2 = administratorService.findByMailAddress(form.getMailAddress());
+		if(administrator2 != null) {
+			result.rejectValue("mailAddress","","こちらのメールアドレスは既に登録されています");
+		}
+		
 		if(result.hasErrors()) {
 			return toInsert();
 		}
