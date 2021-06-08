@@ -28,7 +28,7 @@ public class AdministratorController {
 
 	@Autowired
 	private AdministratorService administratorService;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -41,7 +41,7 @@ public class AdministratorController {
 	public InsertAdministratorForm setUpInsertAdministratorForm() {
 		return new InsertAdministratorForm();
 	}
-	
+
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -68,15 +68,14 @@ public class AdministratorController {
 	/**
 	 * 管理者情報を登録します.
 	 * 
-	 * @param form
-	 *            管理者情報用フォーム
+	 * @param form 管理者情報用フォーム
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
 
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return toInsert();
 		}
 		Administrator administrator = new Administrator();
@@ -103,10 +102,8 @@ public class AdministratorController {
 	/**
 	 * ログインします.
 	 * 
-	 * @param form
-	 *            管理者情報用フォーム
-	 * @param result
-	 *            エラー情報格納用オブッジェクト
+	 * @param form   管理者情報用フォーム
+	 * @param result エラー情報格納用オブッジェクト
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@RequestMapping("/login")
@@ -118,7 +115,7 @@ public class AdministratorController {
 		}
 		return "forward:/employee/showList";
 	}
-	
+
 	/////////////////////////////////////////////////////
 	// ユースケース：ログアウトをする
 	/////////////////////////////////////////////////////
@@ -132,5 +129,15 @@ public class AdministratorController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
+	@RequestMapping("/exception")
+	public String throwsException() {
+
+		System.out.println("例外発生前");
+		System.out.println(10 / 0);
+		System.out.println("例外発生後");
+
+		return "通常はここにHTML名を書くが、ここまで処理は来ない";
+	}
+
 }
