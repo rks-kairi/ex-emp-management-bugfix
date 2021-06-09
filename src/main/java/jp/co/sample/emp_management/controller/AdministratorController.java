@@ -75,8 +75,8 @@ public class AdministratorController {
 
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 
-		Administrator administrator2 = administratorService.findByMailAddress(form.getMailAddress());
-		if (administrator2 != null) {
+		Administrator existAdministrator = administratorService.findByMailAddress(form.getMailAddress());
+		if (existAdministrator != null) {
 			result.rejectValue("mailAddress", "", "こちらのメールアドレスは既に登録されています");
 		}
 
