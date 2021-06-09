@@ -76,11 +76,11 @@ public class AdministratorController {
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 
 		Administrator administrator2 = administratorService.findByMailAddress(form.getMailAddress());
-		if(administrator2 != null) {
-			result.rejectValue("mailAddress","","こちらのメールアドレスは既に登録されています");
+		if (administrator2 != null) {
+			result.rejectValue("mailAddress", "", "こちらのメールアドレスは既に登録されています");
 		}
-		
-		if(result.hasErrors()) {
+
+		if (result.hasErrors()) {
 			return toInsert();
 		}
 		Administrator administrator = new Administrator();
@@ -134,16 +134,6 @@ public class AdministratorController {
 	public String logout() {
 		session.invalidate();
 		return "redirect:/";
-	}
-
-	@RequestMapping("/exception")
-	public String throwsException() {
-
-		System.out.println("例外発生前");
-		System.out.println(10 / 0);
-		System.out.println("例外発生後");
-
-		return "通常はここにHTML名を書くが、ここまで処理は来ない";
 	}
 
 }
